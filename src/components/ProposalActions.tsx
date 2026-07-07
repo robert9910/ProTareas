@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Check, X } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 export function ProposalActions({
@@ -36,15 +37,17 @@ export function ProposalActions({
       <button
         onClick={() => handle("accept")}
         disabled={loading !== null}
-        className="rounded-md bg-black px-3 py-1.5 text-sm font-medium text-white disabled:opacity-50"
+        className="flex items-center gap-1.5 rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
       >
+        <Check className="size-4" />
         {loading === "accept" ? "Aceptando..." : "Aceptar"}
       </button>
       <button
         onClick={() => handle("reject")}
         disabled={loading !== null}
-        className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium disabled:opacity-50"
+        className="flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
       >
+        <X className="size-4" />
         {loading === "reject" ? "Rechazando..." : "Rechazar"}
       </button>
     </div>

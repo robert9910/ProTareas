@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Paperclip } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+
+const inputClass =
+  "rounded-md border border-slate-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
 
 export default function NewTaskPage() {
   const router = useRouter();
@@ -69,12 +73,15 @@ export default function NewTaskPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center gap-6 px-4 py-12">
-      <h1 className="text-2xl font-semibold">Publicar tarea</h1>
+    <main className="mx-auto flex max-w-lg flex-col gap-6 px-4 py-10">
+      <h1 className="text-2xl font-semibold text-slate-900">Publicar tarea</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
+      >
         <div className="flex flex-col gap-1">
-          <label htmlFor="subject" className="text-sm font-medium">
+          <label htmlFor="subject" className="text-sm font-medium text-slate-700">
             Materia
           </label>
           <input
@@ -83,12 +90,12 @@ export default function NewTaskPage() {
             required
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2"
+            className={inputClass}
           />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="description" className="text-sm font-medium">
+          <label htmlFor="description" className="text-sm font-medium text-slate-700">
             Descripción
           </label>
           <textarea
@@ -97,12 +104,12 @@ export default function NewTaskPage() {
             rows={4}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2"
+            className={inputClass}
           />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="budget" className="text-sm font-medium">
+          <label htmlFor="budget" className="text-sm font-medium text-slate-700">
             Presupuesto
           </label>
           <input
@@ -112,12 +119,12 @@ export default function NewTaskPage() {
             step="0.01"
             value={budget}
             onChange={(e) => setBudget(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2"
+            className={inputClass}
           />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="dueDate" className="text-sm font-medium">
+          <label htmlFor="dueDate" className="text-sm font-medium text-slate-700">
             Fecha límite
           </label>
           <input
@@ -125,28 +132,29 @@ export default function NewTaskPage() {
             type="date"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2"
+            className={inputClass}
           />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="file" className="text-sm font-medium">
+          <label htmlFor="file" className="flex items-center gap-1.5 text-sm font-medium text-slate-700">
+            <Paperclip className="size-4" />
             Archivo (opcional)
           </label>
           <input
             id="file"
             type="file"
             onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-            className="text-sm"
+            className="text-sm text-slate-600 file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-sm file:font-medium hover:file:bg-slate-200"
           />
         </div>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-rose-600">{error}</p>}
 
         <button
           type="submit"
           disabled={loading}
-          className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
+          className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
         >
           {loading ? "Publicando..." : "Publicar tarea"}
         </button>

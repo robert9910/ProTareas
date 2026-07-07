@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Send } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+
+const inputClass =
+  "rounded-md border border-slate-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
 
 export function ProposalForm({ taskId }: { taskId: string }) {
   const router = useRouter();
@@ -45,11 +49,14 @@ export function ProposalForm({ taskId }: { taskId: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 rounded-md border border-gray-300 p-4">
-      <h2 className="font-medium">Enviar propuesta</h2>
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
+    >
+      <h2 className="font-medium text-slate-900">Enviar propuesta</h2>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="price" className="text-sm font-medium">
+        <label htmlFor="price" className="text-sm font-medium text-slate-700">
           Precio
         </label>
         <input
@@ -60,12 +67,12 @@ export function ProposalForm({ taskId }: { taskId: string }) {
           required
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-          className="rounded-md border border-gray-300 px-3 py-2"
+          className={inputClass}
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="message" className="text-sm font-medium">
+        <label htmlFor="message" className="text-sm font-medium text-slate-700">
           Mensaje
         </label>
         <textarea
@@ -73,17 +80,18 @@ export function ProposalForm({ taskId }: { taskId: string }) {
           rows={3}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="rounded-md border border-gray-300 px-3 py-2"
+          className={inputClass}
         />
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-rose-600">{error}</p>}
 
       <button
         type="submit"
         disabled={loading}
-        className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
+        className="flex items-center justify-center gap-1.5 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
       >
+        <Send className="size-4" />
         {loading ? "Enviando..." : "Enviar propuesta"}
       </button>
     </form>

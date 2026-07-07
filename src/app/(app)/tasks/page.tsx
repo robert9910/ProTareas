@@ -1,13 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { BookOpen, PlusCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-
-const STATUS_LABEL: Record<string, string> = {
-  open: "abierta",
-  assigned: "asignada",
-  completed: "completada",
-  cancelled: "cancelada",
-};
+import { TaskStatusBadge } from "@/components/StatusBadge";
 
 export default async function TasksPage() {
   const supabase = await createClient();
@@ -38,27 +33,31 @@ export default async function TasksPage() {
     : await query.eq("status", "open");
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-12">
+    <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-10">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">
+        <h1 className="text-2xl font-semibold text-slate-900">
           {isStudent ? "Mis tareas" : "Tareas abiertas"}
         </h1>
         {isStudent && (
           <Link
             href="/tasks/new"
-            className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white"
+            className="flex items-center gap-1.5 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
           >
+            <PlusCircle className="size-4" />
             Publicar tarea
           </Link>
         )}
       </div>
 
       {!tasks?.length && (
-        <p className="text-sm text-gray-600">
-          {isStudent
-            ? "Aún no has publicado ninguna tarea."
-            : "No hay tareas abiertas por ahora."}
-        </p>
+        <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-slate-300 py-12 text-center">
+          <BookOpen className="size-8 text-slate-400" />
+          <p className="text-sm text-slate-500">
+            {isStudent
+              ? "Aún no has publicado ninguna tarea."
+              : "No hay tareas abiertas por ahora."}
+          </p>
+        </div>
       )}
 
       <ul className="flex flex-col gap-3">
@@ -66,17 +65,15 @@ export default async function TasksPage() {
           <li key={task.id}>
             <Link
               href={`/tasks/${task.id}`}
-              className="flex flex-col gap-1 rounded-md border border-gray-300 px-4 py-3 hover:bg-gray-50"
+              className="flex flex-col gap-1 rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm hover:border-indigo-300 hover:shadow"
             >
-              <div className="flex items-center justify-between">
-                <span className="font-medium">{task.subject}</span>
-                <span className="text-xs text-gray-500">
-                  {STATUS_LABEL[task.status] ?? task.status}
-                </span>
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-medium text-slate-900">{task.subject}</span>
+                <TaskStatusBadge status={task.status} />
               </div>
-              <p className="line-clamp-2 text-sm text-gray-600">{task.description}</p>
+              <p className="line-clamp-2 text-sm text-slate-600">{task.description}</p>
               {task.budget && (
-                <span className="text-sm text-gray-500">Presupuesto: ${task.budget}</span>
+                <span className="text-sm text-slate-500">Presupuesto: ${task.budget}</span>
               )}
             </Link>
           </li>

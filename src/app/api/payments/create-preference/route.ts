@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Preference } from "mercadopago";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { getMercadoPagoClient } from "@/lib/mercadopago";
 
 export async function POST(request: Request) {
@@ -40,17 +41,38 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Tarea no valida" }, { status: 404 });
   }
 
-  const { data: payment, error: paymentError } = await supabase
+  // Las escrituras en payments las hace la service role: el estado
+  // solo lo debe tocar el webhook, no la sesion del estudiante.
+  const admin = createAdminClient();
+
+  const { data: existingPayment } = await admin
     .from("payments")
-    .insert({
-      task_id: task.id,
-      proposal_id: proposal.id,
-      student_id: user.id,
-      advisor_id: proposal.advisor_id,
-      amount: proposal.price,
-    })
-    .select("id")
-    .single();
+    .select("id, status")
+    .eq("proposal_id", proposal.id)
+    .maybeSingle();
+
+  if (existingPayment?.status === "approved") {
+    return NextResponse.json({ error: "Esta propuesta ya fue pagada." }, { status: 409 });
+  }
+
+  const { data: payment, error: paymentError } = existingPayment
+    ? await admin
+        .from("payments")
+        .update({ amount: proposal.price, status: "pending" })
+        .eq("id", existingPayment.id)
+        .select("id")
+        .single()
+    : await admin
+        .from("payments")
+        .insert({
+          task_id: task.id,
+          proposal_id: proposal.id,
+          student_id: user.id,
+          advisor_id: proposal.advisor_id,
+          amount: proposal.price,
+        })
+        .select("id")
+        .single();
 
   if (paymentError || !payment) {
     return NextResponse.json(
@@ -83,10 +105,7 @@ export async function POST(request: Request) {
     },
   });
 
-  await supabase
-    .from("payments")
-    .update({ mp_preference_id: preference.id })
-    .eq("id", payment.id);
+  await admin.from("payments").update({ mp_preference_id: preference.id }).eq("id", payment.id);
 
   const checkoutUrl = preference.sandbox_init_point ?? preference.init_point;
 

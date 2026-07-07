@@ -8,12 +8,31 @@ import { TaskStatusBadge, ProposalStatusBadge } from "@/components/StatusBadge";
 import { TaskCompleteButton } from "@/components/TaskCompleteButton";
 import { MessageThread } from "@/components/MessageThread";
 
+const PAYMENT_BANNER: Record<string, { text: string; className: string }> = {
+  success: {
+    text: "¡Pago aprobado! Estamos confirmando la propuesta, puede tardar unos segundos.",
+    className: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/20",
+  },
+  pending: {
+    text: "Tu pago quedó pendiente de confirmación.",
+    className: "bg-amber-50 text-amber-700 ring-1 ring-amber-600/20",
+  },
+  failure: {
+    text: "El pago no se completó. Puedes intentarlo de nuevo.",
+    className: "bg-rose-50 text-rose-700 ring-1 ring-rose-600/20",
+  },
+};
+
 export default async function TaskDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ payment?: string }>;
 }) {
   const { id } = await params;
+  const { payment } = await searchParams;
+  const paymentBanner = payment ? PAYMENT_BANNER[payment] : null;
   const supabase = await createClient();
 
   const {
@@ -80,6 +99,12 @@ export default async function TaskDetailPage({
         <ArrowLeft className="size-4" />
         Volver a tareas
       </Link>
+
+      {paymentBanner && (
+        <div className={`rounded-lg px-4 py-3 text-sm ${paymentBanner.className}`}>
+          {paymentBanner.text}
+        </div>
+      )}
 
       <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex items-center justify-between gap-2">
@@ -169,7 +194,7 @@ export default async function TaskDetailPage({
                   <p className="text-sm text-slate-700">{proposal.message}</p>
                 )}
                 {proposal.status === "pending" && (
-                  <ProposalActions proposalId={proposal.id} taskId={task.id} />
+                  <ProposalActions proposalId={proposal.id} />
                 )}
               </div>
             );

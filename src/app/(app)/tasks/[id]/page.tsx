@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ArrowLeft, Calendar, DollarSign, Paperclip } from "lucide-react";
+import { ArrowLeft, Calendar, DollarSign, Paperclip, Star } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { ProposalForm } from "@/components/ProposalForm";
 import { ProposalActions } from "@/components/ProposalActions";
 import { TaskStatusBadge, ProposalStatusBadge } from "@/components/StatusBadge";
+import { TaskCompleteButton } from "@/components/TaskCompleteButton";
+import { MessageThread } from "@/components/MessageThread";
 
 export default async function TaskDetailPage({
   params,
@@ -47,6 +49,16 @@ export default async function TaskDetailPage({
     .eq("task_id", id)
     .order("created_at", { ascending: true });
 
+  const advisorIds = proposals?.map((p) => p.advisor_id) ?? [];
+  const { data: advisorProfiles } = advisorIds.length
+    ? await supabase
+        .from("advisor_profiles")
+        .select("user_id, subjects, bio, rating_avg")
+        .in("user_id", advisorIds)
+    : { data: [] };
+
+  const profileByAdvisor = new Map(advisorProfiles?.map((p) => [p.user_id, p]));
+
   let fileUrl: string | null = null;
   if (task.file_url) {
     const { data: signed } = await supabase.storage
@@ -56,6 +68,8 @@ export default async function TaskDetailPage({
   }
 
   const myProposal = proposals?.find((p) => p.advisor_id === user.id);
+  const isParticipant = isOwner || Boolean(myProposal);
+  const isAcceptedAdvisor = myProposal?.status === "accepted";
 
   return (
     <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-10">
@@ -97,6 +111,12 @@ export default async function TaskDetailPage({
             </a>
           )}
         </div>
+
+        {isAcceptedAdvisor && task.status === "assigned" && (
+          <div className="pt-2">
+            <TaskCompleteButton taskId={task.id} />
+          </div>
+        )}
       </div>
 
       {isAdvisor && !isOwner && (
@@ -120,25 +140,44 @@ export default async function TaskDetailPage({
           {!proposals?.length && (
             <p className="text-sm text-slate-500">Aún no has recibido propuestas.</p>
           )}
-          {proposals?.map((proposal) => (
-            <div
-              key={proposal.id}
-              className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span className="font-medium text-slate-900">${proposal.price}</span>
-                <ProposalStatusBadge status={proposal.status} />
+          {proposals?.map((proposal) => {
+            const advisorProfile = profileByAdvisor.get(proposal.advisor_id);
+            return (
+              <div
+                key={proposal.id}
+                className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-medium text-slate-900">${proposal.price}</span>
+                  <ProposalStatusBadge status={proposal.status} />
+                </div>
+                {advisorProfile && (
+                  <div className="flex flex-col gap-1 rounded-md bg-slate-50 p-2 text-sm text-slate-600">
+                    {advisorProfile.subjects?.length > 0 && (
+                      <span>Materias: {advisorProfile.subjects.join(", ")}</span>
+                    )}
+                    {advisorProfile.bio && <span>{advisorProfile.bio}</span>}
+                    {advisorProfile.rating_avg > 0 && (
+                      <span className="flex items-center gap-1">
+                        <Star className="size-3.5 fill-amber-400 text-amber-400" />
+                        {advisorProfile.rating_avg}
+                      </span>
+                    )}
+                  </div>
+                )}
+                {proposal.message && (
+                  <p className="text-sm text-slate-700">{proposal.message}</p>
+                )}
+                {proposal.status === "pending" && (
+                  <ProposalActions proposalId={proposal.id} taskId={task.id} />
+                )}
               </div>
-              {proposal.message && (
-                <p className="text-sm text-slate-700">{proposal.message}</p>
-              )}
-              {proposal.status === "pending" && (
-                <ProposalActions proposalId={proposal.id} taskId={task.id} />
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
+
+      {isParticipant && <MessageThread taskId={task.id} currentUserId={user.id} />}
     </main>
   );
 }

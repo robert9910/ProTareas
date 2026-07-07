@@ -1,0 +1,51 @@
+import { redirect } from "next/navigation";
+import { UserCircle } from "lucide-react";
+import { createClient } from "@/lib/supabase/server";
+import { AdvisorProfileForm } from "@/components/AdvisorProfileForm";
+
+export default async function ProfilePage() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const { data: profile } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  if (profile?.role !== "advisor") {
+    redirect("/dashboard");
+  }
+
+  const { data: advisorProfile } = await supabase
+    .from("advisor_profiles")
+    .select("subjects, bio, hourly_rate")
+    .eq("user_id", user.id)
+    .single();
+
+  return (
+    <main className="mx-auto flex max-w-lg flex-col gap-6 px-4 py-10">
+      <div className="flex items-center gap-2">
+        <UserCircle className="size-6 text-indigo-600" />
+        <h1 className="text-2xl font-semibold text-slate-900">Mi perfil</h1>
+      </div>
+      <p className="text-sm text-slate-500">
+        Los estudiantes verán esta información cuando envíes una propuesta.
+      </p>
+
+      <AdvisorProfileForm
+        userId={user.id}
+        initialSubjects={advisorProfile?.subjects?.join(", ") ?? ""}
+        initialBio={advisorProfile?.bio ?? ""}
+        initialHourlyRate={advisorProfile?.hourly_rate?.toString() ?? ""}
+      />
+    </main>
+  );
+}

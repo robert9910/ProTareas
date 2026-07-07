@@ -5,6 +5,7 @@ import {
   ListTodo,
   PlusCircle,
   PackageCheck,
+  UserCircle,
 } from "lucide-react";
 import { LogoutButton } from "@/components/LogoutButton";
 
@@ -59,6 +60,15 @@ export function NavBar({
             >
               <PackageCheck className="size-4" />
               <span className="hidden sm:inline">Por entregar</span>
+            </Link>
+          )}
+          {isAdvisor && (
+            <Link
+              href="/profile"
+              className="flex items-center gap-1.5 rounded-md px-3 py-1.5 hover:bg-slate-100 hover:text-slate-900"
+            >
+              <UserCircle className="size-4" />
+              <span className="hidden sm:inline">Mi perfil</span>
             </Link>
           )}
         </nav>

@@ -7,6 +7,8 @@ import { ProposalActions } from "@/components/ProposalActions";
 import { TaskStatusBadge, ProposalStatusBadge } from "@/components/StatusBadge";
 import { TaskCompleteButton } from "@/components/TaskCompleteButton";
 import { MessageThread } from "@/components/MessageThread";
+import { ReviewForm } from "@/components/ReviewForm";
+import { ReviewDisplay } from "@/components/ReviewDisplay";
 
 const PAYMENT_BANNER: Record<string, { text: string; className: string }> = {
   success: {
@@ -89,6 +91,13 @@ export default async function TaskDetailPage({
   const myProposal = proposals?.find((p) => p.advisor_id === user.id);
   const isParticipant = isOwner || Boolean(myProposal);
   const isAcceptedAdvisor = myProposal?.status === "accepted";
+  const acceptedProposal = proposals?.find((p) => p.status === "accepted");
+
+  const { data: review } = await supabase
+    .from("reviews")
+    .select("rating, comment")
+    .eq("task_id", id)
+    .maybeSingle();
 
   return (
     <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-10">
@@ -143,6 +152,23 @@ export default async function TaskDetailPage({
           </div>
         )}
       </div>
+
+      {task.status === "completed" && (
+        <>
+          {review ? (
+            <ReviewDisplay rating={review.rating} comment={review.comment} />
+          ) : (
+            isOwner &&
+            acceptedProposal && (
+              <ReviewForm
+                taskId={task.id}
+                studentId={user.id}
+                advisorId={acceptedProposal.advisor_id}
+              />
+            )
+          )}
+        </>
+      )}
 
       {isAdvisor && !isOwner && (
         <>

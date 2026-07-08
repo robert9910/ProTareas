@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Payment } from "mercadopago";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getMercadoPagoClient } from "@/lib/mercadopago";
+import { verifyMercadoPagoSignature } from "@/lib/mercadopago-webhook";
 
 export async function POST(request: Request) {
   const url = new URL(request.url);
@@ -12,6 +13,10 @@ export async function POST(request: Request) {
 
   if (type !== "payment" || !paymentId) {
     return NextResponse.json({ received: true });
+  }
+
+  if (!verifyMercadoPagoSignature(request, String(paymentId))) {
+    return NextResponse.json({ error: "Firma invalida" }, { status: 401 });
   }
 
   const mpPayment = await new Payment(getMercadoPagoClient()).get({ id: paymentId });
@@ -44,6 +49,13 @@ export async function POST(request: Request) {
       .eq("id", payment.proposal_id);
 
     await supabase.from("tasks").update({ status: "assigned" }).eq("id", payment.task_id);
+
+    // Las demas propuestas pendientes de esta tarea ya no aplican.
+    await supabase
+      .from("proposals")
+      .update({ status: "rejected" })
+      .eq("task_id", payment.task_id)
+      .eq("status", "pending");
   }
 
   return NextResponse.json({ received: true });

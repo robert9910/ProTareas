@@ -32,7 +32,10 @@ export async function updateSession(request: NextRequest) {
   const isAuthRoute =
     request.nextUrl.pathname.startsWith("/login") ||
     request.nextUrl.pathname.startsWith("/register");
-  const isPublicRoute = request.nextUrl.pathname === "/";
+  const isPublicRoute =
+    request.nextUrl.pathname === "/" ||
+    request.nextUrl.pathname === "/terms" ||
+    request.nextUrl.pathname === "/privacy";
   const isApiRoute = request.nextUrl.pathname.startsWith("/api/");
 
   if (!user && !isAuthRoute && !isPublicRoute && !isApiRoute) {

@@ -26,6 +26,15 @@ export default function Home() {
           Crear cuenta
         </Link>
       </div>
+
+      <div className="flex gap-4 text-xs text-slate-400">
+        <Link href="/terms" className="hover:text-slate-600">
+          Términos de Servicio
+        </Link>
+        <Link href="/privacy" className="hover:text-slate-600">
+          Aviso de Privacidad
+        </Link>
+      </div>
     </main>
   );
 }

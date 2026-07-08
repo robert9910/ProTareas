@@ -19,9 +19,16 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [confirmEmailSent, setConfirmEmailSent] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    if (!acceptedTerms) {
+      setError("Debes aceptar los Términos de Servicio y el Aviso de Privacidad.");
+      return;
+    }
+
     setError(null);
     setLoading(true);
 
@@ -142,6 +149,23 @@ export default function RegisterPage() {
             </label>
           </div>
         </fieldset>
+
+        <label className="flex items-start gap-2 text-sm text-slate-600">
+          <input
+            type="checkbox"
+            checked={acceptedTerms}
+            onChange={(e) => setAcceptedTerms(e.target.checked)}
+            className="mt-0.5"
+          />
+          Acepto los{" "}
+          <Link href="/terms" target="_blank" className="text-indigo-600 hover:text-indigo-700">
+            Términos de Servicio
+          </Link>{" "}
+          y el{" "}
+          <Link href="/privacy" target="_blank" className="text-indigo-600 hover:text-indigo-700">
+            Aviso de Privacidad
+          </Link>
+        </label>
 
         {error && <p className="text-sm text-rose-600">{error}</p>}
 

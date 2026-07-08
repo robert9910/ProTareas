@@ -84,7 +84,7 @@ export default async function AcceptedTasksPage() {
               <li key={task.id}>
                 <Link
                   href={`/tasks/${task.id}`}
-                  className="flex flex-col gap-1 rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm hover:border-indigo-300 hover:shadow"
+                  className="flex flex-col gap-1 rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm hover:border-sky-300 hover:shadow"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className="font-medium text-slate-900">{task.subject}</span>

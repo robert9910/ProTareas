@@ -6,7 +6,7 @@ import { Save } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 const inputClass =
-  "rounded-md border border-slate-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
+  "rounded-md border border-slate-300 px-3 py-2 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500";
 
 export function AdvisorProfileForm({
   userId,
@@ -111,7 +111,7 @@ export function AdvisorProfileForm({
       <button
         type="submit"
         disabled={loading}
-        className="flex items-center justify-center gap-1.5 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+        className="flex items-center justify-center gap-1.5 rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50"
       >
         <Save className="size-4" />
         {loading ? "Guardando..." : "Guardar perfil"}

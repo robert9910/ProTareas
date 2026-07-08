@@ -23,7 +23,7 @@ export function NavBar({
     <header className="border-b border-slate-200 bg-white">
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 px-4 py-3">
         <Link href="/dashboard" className="flex items-center gap-2 font-semibold text-slate-900">
-          <GraduationCap className="size-5 text-indigo-600" />
+          <GraduationCap className="size-5 text-sky-600" />
           ProTareas
         </Link>
 

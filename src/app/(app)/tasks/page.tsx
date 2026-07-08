@@ -41,7 +41,7 @@ export default async function TasksPage() {
         {isStudent && (
           <Link
             href="/tasks/new"
-            className="flex items-center gap-1.5 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+            className="flex items-center gap-1.5 rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700"
           >
             <PlusCircle className="size-4" />
             Publicar tarea
@@ -65,7 +65,7 @@ export default async function TasksPage() {
           <li key={task.id}>
             <Link
               href={`/tasks/${task.id}`}
-              className="flex flex-col gap-1 rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm hover:border-indigo-300 hover:shadow"
+              className="flex flex-col gap-1 rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm hover:border-sky-300 hover:shadow"
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="font-medium text-slate-900">{task.subject}</span>

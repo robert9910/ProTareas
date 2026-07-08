@@ -87,7 +87,7 @@ export function MessageThread({
               key={m.id}
               className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${
                 isMine
-                  ? "self-end bg-indigo-600 text-white"
+                  ? "self-end bg-sky-600 text-white"
                   : "self-start bg-slate-100 text-slate-800"
               }`}
             >
@@ -104,12 +104,12 @@ export function MessageThread({
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Escribe un mensaje..."
-          className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
         />
         <button
           type="submit"
           disabled={sending || !content.trim()}
-          className="flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-white hover:bg-indigo-700 disabled:opacity-50"
+          className="flex items-center justify-center rounded-md bg-sky-600 px-3 py-2 text-white hover:bg-sky-700 disabled:opacity-50"
         >
           <Send className="size-4" />
         </button>

@@ -4,7 +4,7 @@ import { GraduationCap, LogIn, UserPlus } from "lucide-react";
 export default function Home() {
   return (
     <main className="mx-auto flex min-h-screen max-w-sm flex-col items-center justify-center gap-6 bg-slate-50 px-4 text-center">
-      <GraduationCap className="size-12 text-indigo-600" />
+      <GraduationCap className="size-12 text-sky-600" />
       <h1 className="text-3xl font-semibold text-slate-900">ProTareas</h1>
       <p className="text-slate-600">
         Conecta estudiantes con asesores académicos para resolver tareas y
@@ -20,7 +20,7 @@ export default function Home() {
         </Link>
         <Link
           href="/register"
-          className="flex items-center gap-1.5 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          className="flex items-center gap-1.5 rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700"
         >
           <UserPlus className="size-4" />
           Crear cuenta

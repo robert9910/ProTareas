@@ -7,7 +7,7 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <main className="mx-auto flex max-w-2xl flex-col gap-4 px-4 py-10 text-sm text-slate-700">
-      <Link href="/" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+      <Link href="/" className="text-sm font-medium text-sky-600 hover:text-sky-700">
         ← ProTareas
       </Link>
 

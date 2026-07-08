@@ -103,7 +103,7 @@ export default async function TaskDetailPage({
     <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-10">
       <Link
         href="/tasks"
-        className="flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-700"
+        className="flex items-center gap-1 text-sm font-medium text-sky-600 hover:text-sky-700"
       >
         <ArrowLeft className="size-4" />
         Volver a tareas
@@ -138,7 +138,7 @@ export default async function TaskDetailPage({
             <a
               href={fileUrl}
               target="_blank"
-              className="flex items-center gap-1 text-indigo-600 hover:text-indigo-700"
+              className="flex items-center gap-1 text-sky-600 hover:text-sky-700"
             >
               <Paperclip className="size-4" />
               Ver archivo adjunto

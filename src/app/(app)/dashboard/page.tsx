@@ -40,9 +40,9 @@ export default async function DashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2">
         <Link
           href="/tasks"
-          className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm hover:border-indigo-300 hover:shadow"
+          className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm hover:border-sky-300 hover:shadow"
         >
-          <ListTodo className="size-6 text-indigo-600" />
+          <ListTodo className="size-6 text-sky-600" />
           <div>
             <p className="font-medium text-slate-900">
               {isStudent ? "Mis tareas" : "Tareas abiertas"}
@@ -56,9 +56,9 @@ export default async function DashboardPage() {
         {isStudent ? (
           <Link
             href="/tasks/new"
-            className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm hover:border-indigo-300 hover:shadow"
+            className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm hover:border-sky-300 hover:shadow"
           >
-            <PlusCircle className="size-6 text-indigo-600" />
+            <PlusCircle className="size-6 text-sky-600" />
             <div>
               <p className="font-medium text-slate-900">Publicar tarea</p>
               <p className="text-sm text-slate-500">Pide ayuda a un asesor</p>
@@ -67,9 +67,9 @@ export default async function DashboardPage() {
         ) : (
           <Link
             href="/tasks/accepted"
-            className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm hover:border-indigo-300 hover:shadow"
+            className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm hover:border-sky-300 hover:shadow"
           >
-            <PackageCheck className="size-6 text-indigo-600" />
+            <PackageCheck className="size-6 text-sky-600" />
             <div>
               <p className="font-medium text-slate-900">Por entregar</p>
               <p className="text-sm text-slate-500">Tareas que aceptaste</p>

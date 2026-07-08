@@ -7,7 +7,7 @@ import { GraduationCap, LogIn } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 const inputClass =
-  "rounded-md border border-slate-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
+  "rounded-md border border-slate-300 px-3 py-2 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function LoginPage() {
   return (
     <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center gap-6 bg-slate-50 px-4">
       <div className="flex items-center gap-2">
-        <GraduationCap className="size-6 text-indigo-600" />
+        <GraduationCap className="size-6 text-sky-600" />
         <h1 className="text-2xl font-semibold text-slate-900">Iniciar sesión</h1>
       </div>
 
@@ -82,7 +82,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="flex items-center justify-center gap-1.5 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+          className="flex items-center justify-center gap-1.5 rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50"
         >
           <LogIn className="size-4" />
           {loading ? "Entrando..." : "Entrar"}
@@ -91,7 +91,7 @@ export default function LoginPage() {
 
       <p className="text-center text-sm text-slate-600">
         ¿No tienes cuenta?{" "}
-        <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-700">
+        <Link href="/register" className="font-medium text-sky-600 hover:text-sky-700">
           Regístrate
         </Link>
       </p>

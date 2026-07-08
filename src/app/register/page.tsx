@@ -9,7 +9,7 @@ import { createClient } from "@/lib/supabase/client";
 type Role = "student" | "advisor";
 
 const inputClass =
-  "rounded-md border border-slate-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
+  "rounded-md border border-slate-300 px-3 py-2 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -57,13 +57,13 @@ export default function RegisterPage() {
   if (confirmEmailSent) {
     return (
       <main className="mx-auto flex min-h-screen max-w-sm flex-col items-center justify-center gap-4 bg-slate-50 px-4 text-center">
-        <Mail className="size-10 text-indigo-600" />
+        <Mail className="size-10 text-sky-600" />
         <h1 className="text-xl font-semibold text-slate-900">Revisa tu correo</h1>
         <p className="text-sm text-slate-600">
           Te enviamos un enlace de confirmación a <strong>{email}</strong>.
           Confírmalo para poder iniciar sesión.
         </p>
-        <Link href="/login" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+        <Link href="/login" className="text-sm font-medium text-sky-600 hover:text-sky-700">
           Ir a iniciar sesión
         </Link>
       </main>
@@ -73,7 +73,7 @@ export default function RegisterPage() {
   return (
     <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center gap-6 bg-slate-50 px-4">
       <div className="flex items-center gap-2">
-        <GraduationCap className="size-6 text-indigo-600" />
+        <GraduationCap className="size-6 text-sky-600" />
         <h1 className="text-2xl font-semibold text-slate-900">Crear cuenta</h1>
       </div>
 
@@ -116,7 +116,7 @@ export default function RegisterPage() {
             <label
               className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm ${
                 role === "student"
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+                  ? "border-sky-500 bg-sky-50 text-sky-700"
                   : "border-slate-300 text-slate-600"
               }`}
             >
@@ -133,7 +133,7 @@ export default function RegisterPage() {
             <label
               className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm ${
                 role === "advisor"
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+                  ? "border-sky-500 bg-sky-50 text-sky-700"
                   : "border-slate-300 text-slate-600"
               }`}
             >
@@ -158,11 +158,11 @@ export default function RegisterPage() {
             className="mt-0.5"
           />
           Acepto los{" "}
-          <Link href="/terms" target="_blank" className="text-indigo-600 hover:text-indigo-700">
+          <Link href="/terms" target="_blank" className="text-sky-600 hover:text-sky-700">
             Términos de Servicio
           </Link>{" "}
           y el{" "}
-          <Link href="/privacy" target="_blank" className="text-indigo-600 hover:text-indigo-700">
+          <Link href="/privacy" target="_blank" className="text-sky-600 hover:text-sky-700">
             Aviso de Privacidad
           </Link>
         </label>
@@ -172,7 +172,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={loading}
-          className="flex items-center justify-center gap-1.5 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+          className="flex items-center justify-center gap-1.5 rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50"
         >
           <UserPlus className="size-4" />
           {loading ? "Creando cuenta..." : "Crear cuenta"}
@@ -181,7 +181,7 @@ export default function RegisterPage() {
 
       <p className="text-center text-sm text-slate-600">
         ¿Ya tienes cuenta?{" "}
-        <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-700">
+        <Link href="/login" className="font-medium text-sky-600 hover:text-sky-700">
           Inicia sesión
         </Link>
       </p>

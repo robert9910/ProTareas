@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ListTodo, PlusCircle, PackageCheck, ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+import { Testimonials } from "@/components/Testimonials";
 
 const ROLE_LABEL: Record<string, string> = {
   student: "estudiante",
@@ -89,6 +90,8 @@ export default async function DashboardPage() {
           </Link>
         )}
       </div>
+
+      {isStudent && <Testimonials />}
     </main>
   );
 }

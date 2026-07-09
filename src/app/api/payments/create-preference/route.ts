@@ -107,7 +107,7 @@ export async function POST(request: Request) {
 
   await admin.from("payments").update({ mp_preference_id: preference.id }).eq("id", payment.id);
 
-  const checkoutUrl = preference.sandbox_init_point ?? preference.init_point;
-
-  return NextResponse.json({ checkoutUrl });
+  // init_point ya redirige al sandbox o al checkout real segun el tipo
+  // de credencial (Access Token) usada para crear la preferencia.
+  return NextResponse.json({ checkoutUrl: preference.init_point });
 }

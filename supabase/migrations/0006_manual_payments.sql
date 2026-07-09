@@ -1,6 +1,13 @@
 -- Fase 6: pago manual por transferencia/deposito con comprobante
 -- Reemplaza la integracion con Mercado Pago.
 
+-- Filas viejas de intentos con Mercado Pago que quedaron en un status
+-- que ya no existe (pending/cancelled): no tienen comprobante, se
+-- marcan como rechazadas para poder aplicar la restriccion nueva.
+update public.payments
+set status = 'rejected'
+where status not in ('pending_review', 'approved', 'rejected');
+
 alter table public.payments drop constraint if exists payments_status_check;
 
 alter table public.payments
@@ -22,6 +29,7 @@ insert into storage.buckets (id, name, public)
 values ('payment-proofs', 'payment-proofs', false)
 on conflict (id) do nothing;
 
+drop policy if exists "Students can upload own payment proofs" on storage.objects;
 create policy "Students can upload own payment proofs"
   on storage.objects for insert
   with check (
@@ -29,6 +37,7 @@ create policy "Students can upload own payment proofs"
     and (storage.foldername(name))[1] = auth.uid()::text
   );
 
+drop policy if exists "Students can view own payment proofs" on storage.objects;
 create policy "Students can view own payment proofs"
   on storage.objects for select
   using (

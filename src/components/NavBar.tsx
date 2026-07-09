@@ -6,8 +6,10 @@ import {
   PlusCircle,
   PackageCheck,
   UserCircle,
+  Banknote,
 } from "lucide-react";
 import { LogoutButton } from "@/components/LogoutButton";
+import { isAdminEmail } from "@/lib/admin";
 
 const navLinkClass =
   "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-semibold text-ink/60 transition hover:bg-brand/10 hover:text-brand-dark";
@@ -21,6 +23,7 @@ export function NavBar({
 }) {
   const isStudent = role === "student";
   const isAdvisor = role === "advisor";
+  const isAdmin = isAdminEmail(email);
 
   return (
     <header className="border-b border-ink/10 bg-white shadow-sm">
@@ -60,6 +63,12 @@ export function NavBar({
             <Link href="/profile" className={navLinkClass}>
               <UserCircle className="size-4" />
               <span className="hidden sm:inline">Mi perfil</span>
+            </Link>
+          )}
+          {isAdmin && (
+            <Link href="/admin/payments" className={navLinkClass}>
+              <Banknote className="size-4" />
+              <span className="hidden sm:inline">Pagos</span>
             </Link>
           )}
         </nav>

@@ -11,31 +11,12 @@ import { ReviewForm } from "@/components/ReviewForm";
 import { ReviewDisplay } from "@/components/ReviewDisplay";
 import { card } from "@/lib/ui";
 
-const PAYMENT_BANNER: Record<string, { text: string; className: string }> = {
-  success: {
-    text: "¡Pago aprobado! Estamos confirmando la propuesta, puede tardar unos segundos.",
-    className: "bg-status-completed/10 text-status-completed ring-1 ring-status-completed/30",
-  },
-  pending: {
-    text: "Tu pago quedó pendiente de confirmación.",
-    className: "bg-status-pending/10 text-status-pending ring-1 ring-status-pending/30",
-  },
-  failure: {
-    text: "El pago no se completó. Puedes intentarlo de nuevo.",
-    className: "bg-status-rejected/10 text-status-rejected ring-1 ring-status-rejected/30",
-  },
-};
-
 export default async function TaskDetailPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ payment?: string }>;
 }) {
   const { id } = await params;
-  const { payment } = await searchParams;
-  const paymentBanner = payment ? PAYMENT_BANNER[payment] : null;
   const supabase = await createClient();
 
   const {
@@ -81,6 +62,15 @@ export default async function TaskDetailPage({
 
   const profileByAdvisor = new Map(advisorProfiles?.map((p) => [p.user_id, p]));
 
+  const { data: payments } = isOwner
+    ? await supabase
+        .from("payments")
+        .select("id, proposal_id, status")
+        .eq("task_id", id)
+    : { data: [] };
+
+  const paymentByProposal = new Map(payments?.map((p) => [p.proposal_id, p]));
+
   let fileUrl: string | null = null;
   if (task.file_url) {
     const { data: signed } = await supabase.storage
@@ -109,12 +99,6 @@ export default async function TaskDetailPage({
         <ArrowLeft className="size-4" />
         Volver a tareas
       </Link>
-
-      {paymentBanner && (
-        <div className={`rounded-xl px-4 py-3 text-sm font-medium ${paymentBanner.className}`}>
-          {paymentBanner.text}
-        </div>
-      )}
 
       <div className={`flex flex-col gap-2 border-l-4 ${taskBorderClass(task.status)} ${card}`}>
         <div className="flex items-center justify-between gap-2">
@@ -235,7 +219,11 @@ export default async function TaskDetailPage({
                   <p className="text-sm text-ink/70">{proposal.message}</p>
                 )}
                 {proposal.status === "pending" && (
-                  <ProposalActions proposalId={proposal.id} />
+                  <ProposalActions
+                    proposalId={proposal.id}
+                    studentId={user.id}
+                    payment={paymentByProposal.get(proposal.id) ?? null}
+                  />
                 )}
               </div>
             );

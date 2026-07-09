@@ -28,9 +28,10 @@ export default function PrivacyPage() {
         <li>Contenido de tareas, propuestas y mensajes que publiques.</li>
         <li>Archivos que subas como adjuntos a tus tareas.</li>
         <li>
-          Datos de pago: ProTareas no almacena números de tarjeta. Mercado Pago procesa
-          los pagos y nos comparte el estado de la transacción (aprobado, rechazado,
-          pendiente) y un identificador de pago.
+          Datos de pago: ProTareas no almacena números de tarjeta ni cuentas bancarias.
+          Guardamos la foto o captura del comprobante de depósito/transferencia que subas
+          para verificar tu pago, y el estado de esa verificación (pendiente, aprobado,
+          rechazado).
         </li>
       </ul>
 
@@ -43,8 +44,8 @@ export default function PrivacyPage() {
 
       <h2 className="mt-2 font-bold text-ink">3. Con quién compartimos datos</h2>
       <p>
-        Con Supabase (hosting de base de datos y autenticación) y Mercado Pago
-        (procesamiento de pagos). No vendemos tus datos a terceros.
+        Con Supabase (hosting de base de datos, autenticación y almacenamiento de
+        archivos/comprobantes). No vendemos tus datos a terceros.
       </p>
 
       <h2 className="mt-2 font-bold text-ink">4. Tus derechos (ARCO)</h2>

@@ -44,9 +44,11 @@ export default function TermsPage() {
 
       <h2 className="mt-2 font-bold text-ink">4. Pagos</h2>
       <p>
-        Los pagos se procesan a través de Mercado Pago. Al aceptar una propuesta, el
-        estudiante autoriza el cargo por el monto acordado. ProTareas no almacena datos
-        de tarjetas — esa información la maneja Mercado Pago directamente.
+        Los pagos se realizan por depósito o transferencia bancaria directa a la cuenta
+        del negocio. Al aceptar una propuesta, el estudiante debe realizar el depósito y
+        subir una foto o captura del comprobante dentro de la plataforma. La propuesta
+        queda confirmada y la tarea asignada al asesor una vez que el equipo de
+        ProTareas verifica manualmente ese comprobante.
       </p>
       <p>
         [Definir aquí: política de cancelación, reembolsos parciales/totales, qué pasa

@@ -7,8 +7,10 @@ const FACEBOOK_URL =
 const WHATSAPP_URL = "https://wa.me/526462587803";
 const EMAIL = "robertoab1022@gmail.com";
 
-const contactLinkClass =
-  "flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20";
+const iconLinkClass =
+  "flex size-9 items-center justify-center rounded-full border border-white/20 text-white/80 transition hover:border-white/40 hover:text-white";
+
+const columnLinkClass = "text-sm text-white/70 transition hover:text-white";
 
 function FacebookIcon() {
   return (
@@ -21,8 +23,8 @@ function FacebookIcon() {
 export function Footer() {
   return (
     <footer className="mt-auto bg-brand-dark text-white">
-      <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 py-10 text-center sm:flex-row sm:items-start sm:justify-between sm:text-left">
-        <div className="flex flex-col items-center gap-2 sm:items-start">
+      <div className="mx-auto grid max-w-4xl gap-8 px-4 py-12 sm:grid-cols-[1.3fr_1fr_1fr]">
+        <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <Image
               src="/logo.png"
@@ -36,36 +38,46 @@ export function Footer() {
           <p className="max-w-xs text-sm text-white/70">
             Conectamos estudiantes con asesores académicos de confianza.
           </p>
+          <div className="flex gap-2 pt-1">
+            <a href={FACEBOOK_URL} target="_blank" rel="noreferrer" aria-label="Facebook" className={iconLinkClass}>
+              <FacebookIcon />
+            </a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp" className={iconLinkClass}>
+              <MessageCircle className="size-4" />
+            </a>
+            <a href={`mailto:${EMAIL}`} aria-label="Correo" className={iconLinkClass}>
+              <Mail className="size-4" />
+            </a>
+          </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <a href={FACEBOOK_URL} target="_blank" rel="noreferrer" className={contactLinkClass}>
-            <FacebookIcon />
-            Facebook
+        <div className="flex flex-col gap-2">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-white/50">
+            Nosotros
+          </h3>
+          <Link href="/about" className={columnLinkClass}>
+            Sobre nosotros
+          </Link>
+          <a href={`mailto:${EMAIL}`} className={columnLinkClass}>
+            Contacto
           </a>
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className={contactLinkClass}>
-            <MessageCircle className="size-4" />
-            WhatsApp
-          </a>
-          <a href={`mailto:${EMAIL}`} className={contactLinkClass}>
-            <Mail className="size-4" />
-            {EMAIL}
-          </a>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-white/50">
+            Legal
+          </h3>
+          <Link href="/terms" className={columnLinkClass}>
+            Condiciones de uso
+          </Link>
+          <Link href="/privacy" className={columnLinkClass}>
+            Privacidad
+          </Link>
         </div>
       </div>
 
-      <div className="border-t border-white/15 px-4 py-4 text-center text-xs text-white/60">
-        <div className="mx-auto flex max-w-4xl flex-col items-center justify-between gap-2 sm:flex-row">
-          <span>© {new Date().getFullYear()} ProTareas. Todos los derechos reservados.</span>
-          <div className="flex gap-4">
-            <Link href="/terms" className="transition hover:text-white">
-              Términos de Servicio
-            </Link>
-            <Link href="/privacy" className="transition hover:text-white">
-              Aviso de Privacidad
-            </Link>
-          </div>
-        </div>
+      <div className="border-t border-white/15 px-4 py-4 text-center text-xs text-white/50">
+        © {new Date().getFullYear()} ProTareas. Todos los derechos reservados.
       </div>
     </footer>
   );

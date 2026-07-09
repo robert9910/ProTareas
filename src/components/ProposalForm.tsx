@@ -4,9 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Send } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
-
-const inputClass =
-  "rounded-md border border-slate-300 px-3 py-2 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500";
+import { btnPrimary, inputClass, card } from "@/lib/ui";
 
 export function ProposalForm({ taskId }: { taskId: string }) {
   const router = useRouter();
@@ -49,14 +47,11 @@ export function ProposalForm({ taskId }: { taskId: string }) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
-    >
-      <h2 className="font-medium text-slate-900">Enviar propuesta</h2>
+    <form onSubmit={handleSubmit} className={`flex flex-col gap-3 ${card}`}>
+      <h2 className="text-lg font-bold text-ink">Enviar propuesta</h2>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="price" className="text-sm font-medium text-slate-700">
+        <label htmlFor="price" className="text-sm font-semibold text-ink">
           Precio
         </label>
         <input
@@ -72,7 +67,7 @@ export function ProposalForm({ taskId }: { taskId: string }) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="message" className="text-sm font-medium text-slate-700">
+        <label htmlFor="message" className="text-sm font-semibold text-ink">
           Mensaje
         </label>
         <textarea
@@ -84,13 +79,9 @@ export function ProposalForm({ taskId }: { taskId: string }) {
         />
       </div>
 
-      {error && <p className="text-sm text-rose-600">{error}</p>}
+      {error && <p className="text-sm font-medium text-status-rejected">{error}</p>}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="flex items-center justify-center gap-1.5 rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50"
-      >
+      <button type="submit" disabled={loading} className={btnPrimary}>
         <Send className="size-4" />
         {loading ? "Enviando..." : "Enviar propuesta"}
       </button>

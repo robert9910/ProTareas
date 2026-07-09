@@ -38,23 +38,25 @@ export default async function ProfilePage() {
   return (
     <main className="mx-auto flex max-w-lg flex-col gap-6 px-4 py-10">
       <div className="flex items-center gap-2">
-        <UserCircle className="size-6 text-sky-600" />
-        <h1 className="text-2xl font-semibold text-slate-900">Mi perfil</h1>
+        <span className="flex size-9 items-center justify-center rounded-lg bg-brand/10">
+          <UserCircle className="size-5 text-brand-dark" />
+        </span>
+        <h1 className="text-3xl font-extrabold tracking-tight text-ink">Mi perfil</h1>
       </div>
-      <p className="text-sm text-slate-500">
+      <p className="text-sm text-ink/50">
         Los estudiantes verán esta información cuando envíes una propuesta.
       </p>
 
       {advisorProfile?.rating_avg ? (
-        <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm">
-          <Star className="size-5 fill-amber-400 text-amber-400" />
-          <span className="font-medium text-slate-900">{advisorProfile.rating_avg}</span>
-          <span className="text-sm text-slate-500">
+        <div className="flex items-center gap-2 rounded-xl border border-ink/10 bg-white px-4 py-3 shadow-md shadow-ink/5">
+          <Star className="size-5 fill-status-pending text-status-pending" />
+          <span className="font-bold text-ink">{advisorProfile.rating_avg}</span>
+          <span className="text-sm text-ink/50">
             ({reviewCount ?? 0} {reviewCount === 1 ? "calificación" : "calificaciones"})
           </span>
         </div>
       ) : (
-        <p className="text-sm text-slate-500">Aún no tienes calificaciones.</p>
+        <p className="text-sm text-ink/50">Aún no tienes calificaciones.</p>
       )}
 
       <AdvisorProfileForm

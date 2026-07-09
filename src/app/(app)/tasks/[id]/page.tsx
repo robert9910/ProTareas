@@ -4,24 +4,25 @@ import { ArrowLeft, Calendar, DollarSign, Paperclip, Star } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { ProposalForm } from "@/components/ProposalForm";
 import { ProposalActions } from "@/components/ProposalActions";
-import { TaskStatusBadge, ProposalStatusBadge } from "@/components/StatusBadge";
+import { TaskStatusBadge, ProposalStatusBadge, taskBorderClass } from "@/components/StatusBadge";
 import { TaskCompleteButton } from "@/components/TaskCompleteButton";
 import { MessageThread } from "@/components/MessageThread";
 import { ReviewForm } from "@/components/ReviewForm";
 import { ReviewDisplay } from "@/components/ReviewDisplay";
+import { card } from "@/lib/ui";
 
 const PAYMENT_BANNER: Record<string, { text: string; className: string }> = {
   success: {
     text: "¡Pago aprobado! Estamos confirmando la propuesta, puede tardar unos segundos.",
-    className: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/20",
+    className: "bg-status-completed/10 text-status-completed ring-1 ring-status-completed/30",
   },
   pending: {
     text: "Tu pago quedó pendiente de confirmación.",
-    className: "bg-amber-50 text-amber-700 ring-1 ring-amber-600/20",
+    className: "bg-status-pending/10 text-status-pending ring-1 ring-status-pending/30",
   },
   failure: {
     text: "El pago no se completó. Puedes intentarlo de nuevo.",
-    className: "bg-rose-50 text-rose-700 ring-1 ring-rose-600/20",
+    className: "bg-status-rejected/10 text-status-rejected ring-1 ring-status-rejected/30",
   },
 };
 
@@ -103,27 +104,27 @@ export default async function TaskDetailPage({
     <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-10">
       <Link
         href="/tasks"
-        className="flex items-center gap-1 text-sm font-medium text-sky-600 hover:text-sky-700"
+        className="flex items-center gap-1 text-sm font-semibold text-brand-dark hover:underline"
       >
         <ArrowLeft className="size-4" />
         Volver a tareas
       </Link>
 
       {paymentBanner && (
-        <div className={`rounded-lg px-4 py-3 text-sm ${paymentBanner.className}`}>
+        <div className={`rounded-xl px-4 py-3 text-sm font-medium ${paymentBanner.className}`}>
           {paymentBanner.text}
         </div>
       )}
 
-      <div className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <div className={`flex flex-col gap-2 border-l-4 ${taskBorderClass(task.status)} ${card}`}>
         <div className="flex items-center justify-between gap-2">
-          <h1 className="text-xl font-semibold text-slate-900">{task.subject}</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink">{task.subject}</h1>
           <TaskStatusBadge status={task.status} />
         </div>
-        <p className="text-sm text-slate-700">{task.description}</p>
-        <div className="flex flex-wrap gap-x-5 gap-y-1 pt-1 text-sm text-slate-500">
+        <p className="text-sm text-ink/70">{task.description}</p>
+        <div className="flex flex-wrap gap-x-5 gap-y-1 pt-1 text-sm text-ink/50">
           {task.budget && (
-            <span className="flex items-center gap-1">
+            <span className="flex items-center gap-1 font-semibold text-ink/70">
               <DollarSign className="size-4" />
               Presupuesto: ${task.budget}
             </span>
@@ -138,7 +139,7 @@ export default async function TaskDetailPage({
             <a
               href={fileUrl}
               target="_blank"
-              className="flex items-center gap-1 text-sky-600 hover:text-sky-700"
+              className="flex items-center gap-1 font-medium text-brand-dark hover:underline"
             >
               <Paperclip className="size-4" />
               Ver archivo adjunto
@@ -173,8 +174,11 @@ export default async function TaskDetailPage({
       {isAdvisor && !isOwner && (
         <>
           {myProposal ? (
-            <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white p-4 text-sm shadow-sm">
-              <span>Ya enviaste una propuesta de ${myProposal.price}</span>
+            <div className={`flex items-center justify-between text-sm ${card}`}>
+              <span className="text-ink/70">
+                Ya enviaste una propuesta de{" "}
+                <strong className="text-ink">${myProposal.price}</strong>
+              </span>
               <ProposalStatusBadge status={myProposal.status} />
             </div>
           ) : (
@@ -185,39 +189,50 @@ export default async function TaskDetailPage({
 
       {isOwner && (
         <div className="flex flex-col gap-3">
-          <h2 className="font-medium text-slate-900">
+          <h2 className="text-lg font-bold text-ink">
             Propuestas ({proposals?.length ?? 0})
           </h2>
           {!proposals?.length && (
-            <p className="text-sm text-slate-500">Aún no has recibido propuestas.</p>
+            <div className="rounded-2xl border-2 border-dashed border-ink/15 bg-surface-alt px-4 py-8 text-center text-sm text-ink/50">
+              Aún no has recibido propuestas.
+            </div>
           )}
           {proposals?.map((proposal) => {
             const advisorProfile = profileByAdvisor.get(proposal.advisor_id);
             return (
               <div
                 key={proposal.id}
-                className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
+                className={`flex flex-col gap-2 border-l-4 ${taskBorderClass(
+                  proposal.status === "accepted"
+                    ? "completed"
+                    : proposal.status === "rejected"
+                      ? "cancelled"
+                      : "assigned"
+                )} ${card}`}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-medium text-slate-900">${proposal.price}</span>
+                  <span className="text-lg font-bold text-ink">${proposal.price}</span>
                   <ProposalStatusBadge status={proposal.status} />
                 </div>
                 {advisorProfile && (
-                  <div className="flex flex-col gap-1 rounded-md bg-slate-50 p-2 text-sm text-slate-600">
+                  <div className="flex flex-col gap-1 rounded-lg bg-surface-alt p-3 text-sm text-ink/60">
                     {advisorProfile.subjects?.length > 0 && (
-                      <span>Materias: {advisorProfile.subjects.join(", ")}</span>
+                      <span>
+                        <span className="font-semibold text-ink/80">Materias:</span>{" "}
+                        {advisorProfile.subjects.join(", ")}
+                      </span>
                     )}
                     {advisorProfile.bio && <span>{advisorProfile.bio}</span>}
                     {advisorProfile.rating_avg > 0 && (
-                      <span className="flex items-center gap-1">
-                        <Star className="size-3.5 fill-amber-400 text-amber-400" />
+                      <span className="flex items-center gap-1 font-semibold text-ink/80">
+                        <Star className="size-3.5 fill-status-pending text-status-pending" />
                         {advisorProfile.rating_avg}
                       </span>
                     )}
                   </div>
                 )}
                 {proposal.message && (
-                  <p className="text-sm text-slate-700">{proposal.message}</p>
+                  <p className="text-sm text-ink/70">{proposal.message}</p>
                 )}
                 {proposal.status === "pending" && (
                   <ProposalActions proposalId={proposal.id} />

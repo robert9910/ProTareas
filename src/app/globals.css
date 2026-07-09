@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a1a1a;
 }
 
 @theme inline {
@@ -10,13 +10,19 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Paleta de marca ProTareas */
+  --color-brand: #4fb8e8;
+  --color-brand-dark: #2e86ab;
+  --color-ink: #1a1a1a;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f8fafc;
+
+  /* Estados */
+  --color-status-open: #4fb8e8;
+  --color-status-pending: #f59e0b;
+  --color-status-completed: #22c55e;
+  --color-status-rejected: #ef4444;
 }
 
 body {

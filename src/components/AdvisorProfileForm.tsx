@@ -4,9 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Save } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
-
-const inputClass =
-  "rounded-md border border-slate-300 px-3 py-2 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500";
+import { btnPrimary, inputClass, card } from "@/lib/ui";
 
 export function AdvisorProfileForm({
   userId,
@@ -59,12 +57,9 @@ export function AdvisorProfileForm({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
-    >
+    <form onSubmit={handleSubmit} className={`flex flex-col gap-4 ${card}`}>
       <div className="flex flex-col gap-1">
-        <label htmlFor="subjects" className="text-sm font-medium text-slate-700">
+        <label htmlFor="subjects" className="text-sm font-semibold text-ink">
           Materias (separadas por coma)
         </label>
         <input
@@ -78,7 +73,7 @@ export function AdvisorProfileForm({
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="bio" className="text-sm font-medium text-slate-700">
+        <label htmlFor="bio" className="text-sm font-semibold text-ink">
           Bio
         </label>
         <textarea
@@ -91,7 +86,7 @@ export function AdvisorProfileForm({
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="hourlyRate" className="text-sm font-medium text-slate-700">
+        <label htmlFor="hourlyRate" className="text-sm font-semibold text-ink">
           Tarifa por hora
         </label>
         <input
@@ -105,14 +100,10 @@ export function AdvisorProfileForm({
         />
       </div>
 
-      {error && <p className="text-sm text-rose-600">{error}</p>}
-      {saved && <p className="text-sm text-emerald-600">Perfil guardado.</p>}
+      {error && <p className="text-sm font-medium text-status-rejected">{error}</p>}
+      {saved && <p className="text-sm font-medium text-status-completed">Perfil guardado.</p>}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="flex items-center justify-center gap-1.5 rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50"
-      >
+      <button type="submit" disabled={loading} className={btnPrimary}>
         <Save className="size-4" />
         {loading ? "Guardando..." : "Guardar perfil"}
       </button>

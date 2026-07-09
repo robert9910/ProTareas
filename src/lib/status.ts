@@ -1,18 +1,46 @@
 export const TASK_STATUS: Record<
   string,
-  { label: string; badge: string }
+  { label: string; badge: string; border: string }
 > = {
-  open: { label: "Abierta", badge: "bg-blue-50 text-blue-700 ring-blue-600/20" },
-  assigned: { label: "Asignada", badge: "bg-amber-50 text-amber-700 ring-amber-600/20" },
-  completed: { label: "Completada", badge: "bg-emerald-50 text-emerald-700 ring-emerald-600/20" },
-  cancelled: { label: "Cancelada", badge: "bg-slate-100 text-slate-600 ring-slate-500/20" },
+  open: {
+    label: "Abierta",
+    badge: "bg-status-open/10 text-status-open ring-status-open/30",
+    border: "border-l-status-open",
+  },
+  assigned: {
+    label: "Asignada",
+    badge: "bg-status-pending/10 text-status-pending ring-status-pending/30",
+    border: "border-l-status-pending",
+  },
+  completed: {
+    label: "Completada",
+    badge: "bg-status-completed/10 text-status-completed ring-status-completed/30",
+    border: "border-l-status-completed",
+  },
+  cancelled: {
+    label: "Cancelada",
+    badge: "bg-status-rejected/10 text-status-rejected ring-status-rejected/30",
+    border: "border-l-status-rejected",
+  },
 };
 
 export const PROPOSAL_STATUS: Record<
   string,
-  { label: string; badge: string }
+  { label: string; badge: string; border: string }
 > = {
-  pending: { label: "Pendiente", badge: "bg-amber-50 text-amber-700 ring-amber-600/20" },
-  accepted: { label: "Aceptada", badge: "bg-emerald-50 text-emerald-700 ring-emerald-600/20" },
-  rejected: { label: "Rechazada", badge: "bg-rose-50 text-rose-700 ring-rose-600/20" },
+  pending: {
+    label: "Pendiente",
+    badge: "bg-status-pending/10 text-status-pending ring-status-pending/30",
+    border: "border-l-status-pending",
+  },
+  accepted: {
+    label: "Aceptada",
+    badge: "bg-status-completed/10 text-status-completed ring-status-completed/30",
+    border: "border-l-status-completed",
+  },
+  rejected: {
+    label: "Rechazada",
+    badge: "bg-status-rejected/10 text-status-rejected ring-status-rejected/30",
+    border: "border-l-status-rejected",
+  },
 };

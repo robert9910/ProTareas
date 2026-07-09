@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PackageCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { btnSuccess } from "@/lib/ui";
 
 export function TaskCompleteButton({ taskId }: { taskId: string }) {
   const router = useRouter();
@@ -18,11 +19,7 @@ export function TaskCompleteButton({ taskId }: { taskId: string }) {
   }
 
   return (
-    <button
-      onClick={handleComplete}
-      disabled={loading}
-      className="flex items-center gap-1.5 rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
-    >
+    <button onClick={handleComplete} disabled={loading} className={btnSuccess}>
       <PackageCheck className="size-4" />
       {loading ? "Marcando..." : "Marcar como entregada"}
     </button>

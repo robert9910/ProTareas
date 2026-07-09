@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CreditCard, X } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { btnSuccess, btnDanger } from "@/lib/ui";
 
 export function ProposalActions({ proposalId }: { proposalId: string }) {
   const router = useRouter();
@@ -42,24 +43,16 @@ export function ProposalActions({ proposalId }: { proposalId: string }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-2">
-        <button
-          onClick={handleAccept}
-          disabled={loading !== null}
-          className="flex items-center gap-1.5 rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
-        >
+        <button onClick={handleAccept} disabled={loading !== null} className={btnSuccess}>
           <CreditCard className="size-4" />
           {loading === "accept" ? "Redirigiendo a pago..." : "Aceptar y pagar"}
         </button>
-        <button
-          onClick={handleReject}
-          disabled={loading !== null}
-          className="flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
-        >
+        <button onClick={handleReject} disabled={loading !== null} className={btnDanger}>
           <X className="size-4" />
           {loading === "reject" ? "Rechazando..." : "Rechazar"}
         </button>
       </div>
-      {error && <p className="text-sm text-rose-600">{error}</p>}
+      {error && <p className="text-sm font-medium text-status-rejected">{error}</p>}
     </div>
   );
 }

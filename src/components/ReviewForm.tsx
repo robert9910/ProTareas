@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Star } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { btnPrimary, inputClass, card } from "@/lib/ui";
 
 export function ReviewForm({
   taskId,
@@ -50,11 +51,8 @@ export function ReviewForm({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
-    >
-      <h2 className="font-medium text-slate-900">Califica a tu asesor</h2>
+    <form onSubmit={handleSubmit} className={`flex flex-col gap-3 ${card}`}>
+      <h2 className="text-lg font-bold text-ink">Califica a tu asesor</h2>
 
       <div className="flex gap-1">
         {[1, 2, 3, 4, 5].map((value) => (
@@ -69,8 +67,8 @@ export function ReviewForm({
             <Star
               className={`size-7 ${
                 value <= (hoverRating || rating)
-                  ? "fill-amber-400 text-amber-400"
-                  : "text-slate-300"
+                  ? "fill-status-pending text-status-pending"
+                  : "text-ink/20"
               }`}
             />
           </button>
@@ -82,16 +80,12 @@ export function ReviewForm({
         onChange={(e) => setComment(e.target.value)}
         rows={3}
         placeholder="Comentario (opcional)"
-        className="rounded-md border border-slate-300 px-3 py-2 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+        className={inputClass}
       />
 
-      {error && <p className="text-sm text-rose-600">{error}</p>}
+      {error && <p className="text-sm font-medium text-status-rejected">{error}</p>}
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50"
-      >
+      <button type="submit" disabled={loading} className={btnPrimary}>
         {loading ? "Enviando..." : "Enviar calificación"}
       </button>
     </form>

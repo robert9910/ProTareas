@@ -24,7 +24,7 @@ export default async function AppLayout({
     .single();
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-surface-alt">
       <NavBar role={profile?.role ?? null} email={user.email ?? ""} />
       {children}
     </div>

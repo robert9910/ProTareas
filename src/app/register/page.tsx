@@ -5,11 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { GraduationCap, UserPlus, Mail } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { btnPrimary, inputClass, card } from "@/lib/ui";
 
 type Role = "student" | "advisor";
-
-const inputClass =
-  "rounded-md border border-slate-300 px-3 py-2 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -56,14 +54,16 @@ export default function RegisterPage() {
 
   if (confirmEmailSent) {
     return (
-      <main className="mx-auto flex min-h-screen max-w-sm flex-col items-center justify-center gap-4 bg-slate-50 px-4 text-center">
-        <Mail className="size-10 text-sky-600" />
-        <h1 className="text-xl font-semibold text-slate-900">Revisa tu correo</h1>
-        <p className="text-sm text-slate-600">
-          Te enviamos un enlace de confirmación a <strong>{email}</strong>.
+      <main className="mx-auto flex min-h-screen max-w-sm flex-col items-center justify-center gap-4 bg-surface-alt px-4 text-center">
+        <div className="flex size-16 items-center justify-center rounded-2xl bg-brand/10">
+          <Mail className="size-9 text-brand-dark" />
+        </div>
+        <h1 className="text-2xl font-extrabold tracking-tight text-ink">Revisa tu correo</h1>
+        <p className="text-sm text-ink/60">
+          Te enviamos un enlace de confirmación a <strong className="text-ink">{email}</strong>.
           Confírmalo para poder iniciar sesión.
         </p>
-        <Link href="/login" className="text-sm font-medium text-sky-600 hover:text-sky-700">
+        <Link href="/login" className="text-sm font-semibold text-brand-dark hover:underline">
           Ir a iniciar sesión
         </Link>
       </main>
@@ -71,18 +71,15 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center gap-6 bg-slate-50 px-4">
+    <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center gap-6 bg-surface-alt px-4">
       <div className="flex items-center gap-2">
-        <GraduationCap className="size-6 text-sky-600" />
-        <h1 className="text-2xl font-semibold text-slate-900">Crear cuenta</h1>
+        <GraduationCap className="size-7 text-brand-dark" />
+        <h1 className="text-2xl font-extrabold tracking-tight text-ink">Crear cuenta</h1>
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
-      >
+      <form onSubmit={handleSubmit} className={`flex flex-col gap-4 ${card}`}>
         <div className="flex flex-col gap-1">
-          <label htmlFor="email" className="text-sm font-medium text-slate-700">
+          <label htmlFor="email" className="text-sm font-semibold text-ink">
             Correo electrónico
           </label>
           <input
@@ -96,7 +93,7 @@ export default function RegisterPage() {
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="password" className="text-sm font-medium text-slate-700">
+          <label htmlFor="password" className="text-sm font-semibold text-ink">
             Contraseña
           </label>
           <input
@@ -111,13 +108,13 @@ export default function RegisterPage() {
         </div>
 
         <fieldset className="flex flex-col gap-2">
-          <legend className="text-sm font-medium text-slate-700">Soy...</legend>
+          <legend className="text-sm font-semibold text-ink">Soy...</legend>
           <div className="flex gap-3">
             <label
-              className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm ${
+              className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 px-3 py-2 text-sm font-medium transition ${
                 role === "student"
-                  ? "border-sky-500 bg-sky-50 text-sky-700"
-                  : "border-slate-300 text-slate-600"
+                  ? "border-brand bg-brand/10 text-brand-dark"
+                  : "border-ink/10 text-ink/60 hover:border-ink/20"
               }`}
             >
               <input
@@ -131,10 +128,10 @@ export default function RegisterPage() {
               Estudiante
             </label>
             <label
-              className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm ${
+              className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 px-3 py-2 text-sm font-medium transition ${
                 role === "advisor"
-                  ? "border-sky-500 bg-sky-50 text-sky-700"
-                  : "border-slate-300 text-slate-600"
+                  ? "border-brand bg-brand/10 text-brand-dark"
+                  : "border-ink/10 text-ink/60 hover:border-ink/20"
               }`}
             >
               <input
@@ -150,38 +147,34 @@ export default function RegisterPage() {
           </div>
         </fieldset>
 
-        <label className="flex items-start gap-2 text-sm text-slate-600">
+        <label className="flex items-start gap-2 text-sm text-ink/60">
           <input
             type="checkbox"
             checked={acceptedTerms}
             onChange={(e) => setAcceptedTerms(e.target.checked)}
-            className="mt-0.5"
+            className="mt-0.5 accent-brand"
           />
           Acepto los{" "}
-          <Link href="/terms" target="_blank" className="text-sky-600 hover:text-sky-700">
+          <Link href="/terms" target="_blank" className="font-medium text-brand-dark hover:underline">
             Términos de Servicio
           </Link>{" "}
           y el{" "}
-          <Link href="/privacy" target="_blank" className="text-sky-600 hover:text-sky-700">
+          <Link href="/privacy" target="_blank" className="font-medium text-brand-dark hover:underline">
             Aviso de Privacidad
           </Link>
         </label>
 
-        {error && <p className="text-sm text-rose-600">{error}</p>}
+        {error && <p className="text-sm font-medium text-status-rejected">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="flex items-center justify-center gap-1.5 rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50"
-        >
+        <button type="submit" disabled={loading} className={btnPrimary}>
           <UserPlus className="size-4" />
           {loading ? "Creando cuenta..." : "Crear cuenta"}
         </button>
       </form>
 
-      <p className="text-center text-sm text-slate-600">
+      <p className="text-center text-sm text-ink/60">
         ¿Ya tienes cuenta?{" "}
-        <Link href="/login" className="font-medium text-sky-600 hover:text-sky-700">
+        <Link href="/login" className="font-semibold text-brand-dark hover:underline">
           Inicia sesión
         </Link>
       </p>

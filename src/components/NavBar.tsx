@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
-  GraduationCap,
   LayoutDashboard,
   ListTodo,
   PlusCircle,
@@ -29,10 +29,7 @@ export function NavBar({
     <header className="border-b border-ink/10 bg-white shadow-sm">
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 px-4 py-3">
         <Link href="/dashboard" className="flex items-center gap-2 font-extrabold text-ink">
-          {/* TODO: swap for the real logo once public/logo.png exists */}
-          <span className="flex size-8 items-center justify-center rounded-lg bg-brand/10">
-            <GraduationCap className="size-5 text-brand-dark" />
-          </span>
+          <Image src="/logo.png" alt="ProTareas" width={40} height={40} className="size-10" priority />
           ProTareas
         </Link>
 

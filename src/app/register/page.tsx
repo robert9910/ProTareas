@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { GraduationCap, UserPlus, Mail } from "lucide-react";
+import { UserPlus, Mail } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { btnPrimary, inputClass, card } from "@/lib/ui";
 
@@ -73,7 +74,7 @@ export default function RegisterPage() {
   return (
     <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center gap-6 bg-surface-alt px-4">
       <div className="flex items-center gap-2">
-        <GraduationCap className="size-7 text-brand-dark" />
+        <Image src="/logo.png" alt="ProTareas" width={28} height={28} className="size-7" />
         <h1 className="text-2xl font-extrabold tracking-tight text-ink">Crear cuenta</h1>
       </div>
 

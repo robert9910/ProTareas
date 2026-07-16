@@ -1,5 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { isAdminEmail } from "@/lib/admin";
+
+const ADMIN_HOME = "/admin/payments";
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -42,6 +45,20 @@ export async function updateSession(request: NextRequest) {
   if (!user && !isAuthRoute && !isPublicRoute && !isApiRoute) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
+
+  // La cuenta de administrador solo existe para revisar comprobantes
+  // de pago: no puede usar el resto de la app (tareas, propuestas,
+  // etc.), sin importar el rol que tenga en public.users.
+  if (
+    user &&
+    isAdminEmail(user.email) &&
+    !isApiRoute &&
+    request.nextUrl.pathname !== ADMIN_HOME
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = ADMIN_HOME;
     return NextResponse.redirect(url);
   }
 

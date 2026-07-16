@@ -19,6 +19,12 @@ export default function NewTaskPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+
+    if (file && file.size > 15 * 1024 * 1024) {
+      setError("El archivo no puede pesar más de 15 MB.");
+      return;
+    }
+
     setLoading(true);
 
     const supabase = createClient();
@@ -139,9 +145,11 @@ export default function NewTaskPage() {
           <input
             id="file"
             type="file"
+            accept="image/png,image/jpeg,image/webp,image/gif,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             onChange={(e) => setFile(e.target.files?.[0] ?? null)}
             className="text-sm text-ink/60 file:mr-3 file:rounded-lg file:border-0 file:bg-brand/10 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-brand-dark hover:file:bg-brand/20"
           />
+          <p className="text-xs text-ink/40">Imagen, PDF o Word. Máximo 15 MB.</p>
         </div>
 
         {error && <p className="text-sm font-medium text-status-rejected">{error}</p>}

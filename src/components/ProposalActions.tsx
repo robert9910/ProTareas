@@ -35,6 +35,12 @@ export function ProposalActions({
   async function handleUpload() {
     if (!file) return;
     setError(null);
+
+    if (file.size > 10 * 1024 * 1024) {
+      setError("La imagen no puede pesar más de 10 MB.");
+      return;
+    }
+
     setLoading("upload");
 
     const supabase = createClient();

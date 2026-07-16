@@ -12,13 +12,13 @@ export default function PrivacyPage() {
       </Link>
 
       <h1 className="text-3xl font-extrabold tracking-tight text-ink">Aviso de Privacidad</h1>
-      <p className="text-ink/50">Última actualización: [fecha]</p>
+      <p className="text-ink/50">Última actualización: 16 de julio de 2026</p>
 
-      <div className="rounded-lg bg-status-pending/10 p-4 text-amber-900 ring-1 ring-status-pending/30">
-        Este es un borrador de referencia. Antes de lanzar, revísalo con un abogado —
-        en México aplica la Ley Federal de Protección de Datos Personales en Posesión de
-        los Particulares (LFPDPPP), que exige un aviso de privacidad con requisitos
-        específicos.
+      <div className="rounded-lg bg-status-pending/10 p-3 text-xs text-amber-900 ring-1 ring-status-pending/30">
+        Documento de referencia redactado para el funcionamiento actual de ProTareas.
+        No sustituye asesoría legal profesional; en México aplica la Ley Federal de
+        Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), así
+        que si tu operación crece conviene que un abogado lo revise a detalle.
       </div>
 
       <h2 className="mt-2 font-bold text-ink">1. Datos que recopilamos</h2>
@@ -51,11 +51,23 @@ export default function PrivacyPage() {
       <h2 className="mt-2 font-bold text-ink">4. Tus derechos (ARCO)</h2>
       <p>
         Puedes solicitar acceso, rectificación, cancelación u oposición sobre tus datos
-        personales escribiendo a [correo de contacto].
+        personales escribiendo a{" "}
+        <a href="mailto:robertoab1022@gmail.com" className="font-medium text-brand-dark hover:underline">
+          robertoab1022@gmail.com
+        </a>
+        . Responderemos tu solicitud en un plazo razonable.
       </p>
 
       <h2 className="mt-2 font-bold text-ink">5. Contacto</h2>
-      <p>[correo de contacto / soporte]</p>
+      <p>
+        <a href="mailto:robertoab1022@gmail.com" className="font-medium text-brand-dark hover:underline">
+          robertoab1022@gmail.com
+        </a>{" "}
+        · WhatsApp:{" "}
+        <a href="https://wa.me/526462587803" target="_blank" rel="noreferrer" className="font-medium text-brand-dark hover:underline">
+          646 258 7803
+        </a>
+      </p>
     </main>
   );
 }

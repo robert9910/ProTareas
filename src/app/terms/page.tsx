@@ -12,12 +12,12 @@ export default function TermsPage() {
       </Link>
 
       <h1 className="text-3xl font-extrabold tracking-tight text-ink">Términos de Servicio</h1>
-      <p className="text-ink/50">Última actualización: [fecha]</p>
+      <p className="text-ink/50">Última actualización: 16 de julio de 2026</p>
 
-      <div className="rounded-lg bg-status-pending/10 p-4 text-amber-900 ring-1 ring-status-pending/30">
-        Este es un borrador de referencia, no un documento legal validado. Antes de
-        lanzar la app, hazlo revisar por un abogado en tu jurisdicción — especialmente
-        las secciones de pagos, cancelaciones y responsabilidad.
+      <div className="rounded-lg bg-status-pending/10 p-3 text-xs text-amber-900 ring-1 ring-status-pending/30">
+        Documento de referencia redactado para el funcionamiento actual de ProTareas.
+        No sustituye asesoría legal profesional; si tu operación crece o cambias de
+        país, conviene que un abogado lo revise.
       </div>
 
       <h2 className="mt-2 font-bold text-ink">1. Qué es ProTareas</h2>
@@ -51,8 +51,14 @@ export default function TermsPage() {
         ProTareas verifica manualmente ese comprobante.
       </p>
       <p>
-        [Definir aquí: política de cancelación, reembolsos parciales/totales, qué pasa
-        si el asesor no entrega, plazos para disputas.]
+        Antes de que un pago sea verificado, el estudiante puede cancelar su tarea
+        libremente (mientras siga en estado &quot;abierta&quot;) sin ningún cargo. Una
+        vez que el pago fue verificado y la tarea asignada, no hay reembolsos
+        automáticos ni garantizados. Si el asesor no entrega, hay un problema con el
+        trabajo o cualquier otra inconformidad, el estudiante debe contactar a ProTareas
+        por los medios listados en la sección 7; cada caso se revisa individualmente y
+        la resolución (reembolso total, parcial o reasignación a otro asesor) queda a
+        discreción de ProTareas según las circunstancias.
       </p>
 
       <h2 className="mt-2 font-bold text-ink">5. Conducta esperada</h2>
@@ -70,7 +76,17 @@ export default function TermsPage() {
       </p>
 
       <h2 className="mt-2 font-bold text-ink">7. Contacto</h2>
-      <p>[correo de contacto / soporte]</p>
+      <p>
+        Para dudas, soporte o disputas sobre un pago, escríbenos a{" "}
+        <a href="mailto:robertoab1022@gmail.com" className="font-medium text-brand-dark hover:underline">
+          robertoab1022@gmail.com
+        </a>{" "}
+        o por WhatsApp al{" "}
+        <a href="https://wa.me/526462587803" target="_blank" rel="noreferrer" className="font-medium text-brand-dark hover:underline">
+          646 258 7803
+        </a>
+        .
+      </p>
     </main>
   );
 }
